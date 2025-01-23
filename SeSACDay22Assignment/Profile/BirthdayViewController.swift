@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class BirthdayViewController: UIViewController {
+final class BirthdayViewController: UIViewController {
     
     let datePicker = UIDatePicker()
     
@@ -19,7 +19,11 @@ class BirthdayViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        okButtonTapped()
+        let date = datePicker.date
+        
+        NotificationCenter.default.post(name: NSNotification.Name("birthDay"),
+                                        object: nil, // object는 아직 이해 하지 않아도 된다고 하셨다 잠깐 신경끄자
+                                        userInfo: ["birthday" : date])
     }
     // notificationCenter 활용 전달
     @objc func okButtonTapped() {

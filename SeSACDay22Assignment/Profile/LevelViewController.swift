@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class LevelViewController: UIViewController {
+final class LevelViewController: UIViewController {
 
     let segmentedControl = UISegmentedControl(items: ["상", "중", "하"])
     
@@ -24,11 +24,14 @@ class LevelViewController: UIViewController {
         
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        okButtonTapped()
+        let selectedIdx = segmentedControl.selectedSegmentIndex
+        if let levelText =  segmentedControl.titleForSegment(at: selectedIdx) {
+            level?.levelReceived(value: levelText)
+        }
     }
     
     
-    @objc func okButtonTapped() {
+    @objc private func okButtonTapped() {
         print(#function)
         
         

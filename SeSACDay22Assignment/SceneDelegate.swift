@@ -11,29 +11,29 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
-
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
-        var start = UserDefaults.standard.integer(forKey: "start")
-        print(start , "신델리게이트 화면의 스타트")
-        if start == 0 {
+      
             guard let windowScene = (scene as? UIWindowScene) else { return }
-            window = UIWindow(windowScene: windowScene)
-            window?.rootViewController = UINavigationController(
-                rootViewController: OnboardingViewController()
-            )
-            window?.makeKeyAndVisible()
-        } else {
-            window?.rootViewController = UINavigationController(
-                rootViewController: ProfileViewController()
-            )
+        window = UIWindow(windowScene: windowScene)
+            // UserDefaults에서 start 값을 가져옴
+            let tapStart = UserDefaults.standard.integer(forKey: "start") 
+            
+            // start 값에 따라 초기 화면 결정
+        if (tapStart != 0) {
+                window?.rootViewController = UINavigationController(rootViewController: ProfileViewController())
+            } else {
+                window?.rootViewController = UINavigationController(rootViewController: OnboardingViewController())
+            }
+            
             window?.makeKeyAndVisible()
         }
         
         
         
         
-    }
+    
 
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.

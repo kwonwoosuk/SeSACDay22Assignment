@@ -13,23 +13,28 @@ protocol PassDataDelegate {
     func levelReceived(value: String)
 }
 
-class ProfileViewController: UIViewController {
+final class ProfileViewController: UIViewController {
 
-    let savebutton = UIButton()
+    private let savebutton = UIButton()
     
-    let nicknameButton = UIButton()
-    let birthdayButton = UIButton()
-    let levelButton = UIButton()
+    private let nicknameButton = UIButton()
+    private let birthdayButton = UIButton()
+    private let levelButton = UIButton()
     
     let nicknameLabel = UILabel()
     let birthdayLabel = UILabel()
     let levelLabel = UILabel()
     
-   
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        showBtnIfTFNotEmpty()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         configureView()
         loadData()
+        
     
         nicknameButton.addTarget(self, action: #selector(nicknameButtonTapped), for: .touchUpInside)
         birthdayButton.addTarget(self, action: #selector(birthdayButtonTapped), for: .touchUpInside)
@@ -53,10 +58,24 @@ class ProfileViewController: UIViewController {
                                                selector: #selector(birthDayReceivedNotification),
                                                name: NSNotification.Name("birthDay"),
                                                object: nil)
+        
+      
                
     }
     
-    func loadData() {
+    private func showBtnIfTFNotEmpty() {
+        if let nick = nicknameLabel.text, !nick.isEmpty,
+           let birth = birthdayLabel.text, !birth.isEmpty,
+            let level = levelLabel.text, !level.isEmpty
+        {
+            savebutton.isHidden = false
+        } else {
+            savebutton.isHidden = true
+        }
+    }
+    
+    
+    private func loadData() {
         nicknameLabel.text = UserDefaults.standard.string(forKey: "nickname")
         birthdayLabel.text = UserDefaults.standard.string(forKey: "birth")
         levelLabel.text = UserDefaults.standard.string(forKey: "level")
@@ -64,14 +83,14 @@ class ProfileViewController: UIViewController {
     
     
     @objc
-    func saveButtonTapped() {
+    private func saveButtonTapped() {
         UserDefaults.standard.set(nicknameLabel.text, forKey: "nickname")
         UserDefaults.standard.set(birthdayLabel.text, forKey: "birth")
         UserDefaults.standard.set(levelLabel.text, forKey: "level")
     }
     
     
-    @objc func withdrawButtonTapped() { // 탈퇴하기
+    @objc private func withdrawButtonTapped() { // 탈퇴하기
         print(#function)
         var start = UserDefaults.standard.integer(forKey: "start")
         start = 0
@@ -88,7 +107,7 @@ class ProfileViewController: UIViewController {
         
     }
     
-    func configureView() {
+    private func configureView() {
         navigationItem.title = "프로필 화면"
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "탈퇴하기", style: .plain, target: self, action: #selector(withdrawButtonTapped))
         view.backgroundColor = .white
@@ -186,7 +205,7 @@ class ProfileViewController: UIViewController {
     }
     
     @objc
-    func birthDayReceivedNotification(value: NSNotification) {
+    private func birthDayReceivedNotification(value: NSNotification) {
         if let birthDay = value.userInfo!["birthday"] as? Date {
             birthdayLabel.text = dateFormat(date: birthDay)
         } else {
@@ -206,7 +225,7 @@ class ProfileViewController: UIViewController {
     }
     
     @objc // delegate
-    func levelButtonTapped() {
+    private func levelButtonTapped() {
         let vc = LevelViewController()
         vc.level = self
         

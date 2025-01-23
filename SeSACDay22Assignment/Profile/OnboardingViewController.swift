@@ -8,18 +8,19 @@
 import UIKit
 import SnapKit
 
-class OnboardingViewController: UIViewController {
+final class OnboardingViewController: UIViewController {
 
     let button = UIButton()
     var start = 0
     
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        print(start)
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let window = windowScene.windows.first else { return }
+        window.rootViewController = UINavigationController(rootViewController: ProfileViewController())
+        window.makeKeyAndVisible()
     }
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 

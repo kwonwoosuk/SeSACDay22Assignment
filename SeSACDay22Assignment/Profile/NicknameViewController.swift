@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class NicknameViewController: UIViewController {
+final class NicknameViewController: UIViewController {
     
     let textField = UITextField()
     var contents: ((String) -> Void)?
@@ -16,7 +16,8 @@ class NicknameViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        okButtonTapped()
+        guard let text = textField.text else { return }
+        contents?(text)
     }
     
     override func viewDidLoad() {
