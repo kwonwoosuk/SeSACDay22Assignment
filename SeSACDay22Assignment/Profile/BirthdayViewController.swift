@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 class BirthdayViewController: UIViewController {
-
+    
     let datePicker = UIDatePicker()
     
     override func viewDidLoad() {
@@ -17,7 +17,10 @@ class BirthdayViewController: UIViewController {
         configureView()
     }
     
-    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        okButtonTapped()
+    }
     // notificationCenter 활용 전달
     @objc func okButtonTapped() {
         print(#function)
@@ -25,18 +28,14 @@ class BirthdayViewController: UIViewController {
         
         NotificationCenter.default.post(name: NSNotification.Name("birthDay"),
                                         object: nil, // object는 아직 이해 하지 않아도 된다고 하셨다 잠깐 신경끄자
-                                        userInfo: ["birthday" : date]) // 
+                                        userInfo: ["birthday" : date]) //
         navigationController?.popViewController(animated: true)
     }
     
     @objc func dateChange(_ sender: UIDatePicker) {
         // 값이 변하면 UIDatePicker에서 날자를 받아와 형식을 변형해서 textField에 넣어줍니다.
-      
+        
     }
-    
-    
-    
-    
     
     func configureView() {
         navigationItem.title = "생일"
@@ -49,11 +48,5 @@ class BirthdayViewController: UIViewController {
         datePicker.preferredDatePickerStyle = .wheels
         datePicker.datePickerMode = .date
     }
-    
-    
-    
-    
-   
-    
     
 }

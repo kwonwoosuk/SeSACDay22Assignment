@@ -48,7 +48,7 @@ class ProfileViewController: UIViewController {
         savebutton.setTitleColor(.darkGray, for: .normal)
         savebutton.setTitle("저장하기", for: .normal)
         
-        
+        //post 너 오기만 해👀
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(birthDayReceivedNotification),
                                                name: NSNotification.Name("birthDay"),
@@ -71,7 +71,7 @@ class ProfileViewController: UIViewController {
     }
     
     
-    @objc func okButtonTapped() {
+    @objc func withdrawButtonTapped() { // 탈퇴하기
         print(#function)
         var start = UserDefaults.standard.integer(forKey: "start")
         start = 0
@@ -80,8 +80,6 @@ class ProfileViewController: UIViewController {
         UserDefaults.standard.removeObject(forKey: "nickname")
         UserDefaults.standard.removeObject(forKey: "birth")
         UserDefaults.standard.removeObject(forKey: "level")
-        
-        
         
         guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
               let window = windowScene.windows.first else { return }
@@ -92,7 +90,7 @@ class ProfileViewController: UIViewController {
     
     func configureView() {
         navigationItem.title = "프로필 화면"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "탈퇴하기", style: .plain, target: self, action: #selector(okButtonTapped))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "탈퇴하기", style: .plain, target: self, action: #selector(withdrawButtonTapped))
         view.backgroundColor = .white
         
         view.addSubview(nicknameButton)
@@ -167,7 +165,6 @@ class ProfileViewController: UIViewController {
         levelLabel.textAlignment = .right
     }
     
- 
     @objc// Closure
     func nicknameButtonTapped() {
         let vc = NicknameViewController()
@@ -177,9 +174,7 @@ class ProfileViewController: UIViewController {
             self.nicknameLabel.text = value
         }
     }
-    
-    
-    
+
     @objc // NotificationCenter
     func birthdayButtonTapped() {
         let vc = BirthdayViewController()
@@ -187,7 +182,6 @@ class ProfileViewController: UIViewController {
             vc.datePicker.date = dateFormat(string: birthday) ?? Date()
         }
         
-         
         navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -210,9 +204,6 @@ class ProfileViewController: UIViewController {
         formatter.dateFormat = "yyyy년MM월dd일"
         return formatter.date(from: string)
     }
-    
-    
-    
     
     @objc // delegate
     func levelButtonTapped() {

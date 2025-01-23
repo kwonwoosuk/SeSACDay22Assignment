@@ -9,18 +9,22 @@ import UIKit
 import SnapKit
 
 class NicknameViewController: UIViewController {
-
+    
     let textField = UITextField()
     var contents: ((String) -> Void)?
     
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        okButtonTapped()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
         
     }
-    // 클로저로 전달 
+    // 클로저로 전달
     @objc func okButtonTapped() {
         print(#function)
         guard let text = textField.text else { return }

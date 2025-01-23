@@ -18,6 +18,8 @@ class OnboardingViewController: UIViewController {
         super.viewWillAppear(animated)
         print(start)
     }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

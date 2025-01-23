@@ -14,16 +14,18 @@ class LevelViewController: UIViewController {
     
     var level: PassDataDelegate?
     var levelText: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
-        
-        
     }
     
   
         
-        
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        okButtonTapped()
+    }
     
     
     @objc func okButtonTapped() {
